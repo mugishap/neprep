@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 </div>
-
+ 
 ---
 
 <p align="center"> This is a combination of 2023 practicals responses.

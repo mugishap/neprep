@@ -8,7 +8,7 @@
 
 ## 📇 About <a name = "about"></a>
 
-React & Node Project
+React & Node Project 
 
 ## 🚀 Getting Started <a name = "getting_started"></a>
 
