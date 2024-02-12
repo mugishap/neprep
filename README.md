@@ -1,4 +1,4 @@
-<h3 align="center">NE Practicals 2023</h3>
+<h3 align="center">NE Practicals Templates</h3>
 
 <div align="center">
 
@@ -11,7 +11,7 @@
  
 ---
 
-<p align="center"> This is a combination of 2023 practicals responses.
+<p align="center"> This is a combination of Templates for practicals responses.
     <br> 
 </p>
 
@@ -57,19 +57,9 @@ The following things should be installed on your local machine.
 - [Object-Oriented Programming (OOP) with Java](oop/OOP.md)
 - [Embedded Systems](embedded-systems/EMBEDDED.md)
 
-## 🔧 Running the tests <a name = "tests"></a>
-
-To test the projects above or explore more about their functionality head to the deployed versions below. They correspond to the modules combined
-
-- [Equipment Distribution System]()
-- [EUCL Mobile App]()
-- [RCA Store Management]()
-- [Object-Oriented Programming (OOP) with Java]()
-- [IoT Weather Station]()
-
 ## ⛏️ Built Using <a name = "built_using"></a>
 
-A small of the stacks used for different projects inside
+A small of the stacks used for different projects are inside the project specific readmes
 
 #### Restful Services and Web Application Development
 
