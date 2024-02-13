@@ -1,4 +1,4 @@
-import { compare, hash } from "bcrypt"
+import { compare, compareSync, hash } from "bcrypt"
 import { Request, Response } from "express"
 import jwt from 'jsonwebtoken'
 import prisma from "../prisma/prisma-client"
@@ -14,7 +14,7 @@ const login = async (req: Request, res: Response) => {
             where: { email }
         })
         if (!user) return ServerResponse.error(res, "Invalid email or password")
-        const isMatch = compare(password, user.password)
+        const isMatch = compareSync(password, user.password)
         if (!isMatch) return ServerResponse.error(res, "Invalid email or password")
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY as string, { expiresIn: '3d' })
         return ServerResponse.success(res, "Login successful", { user, token })
@@ -39,6 +39,7 @@ const initiateResetPassword = async (req: Request, res: Response) => {
         await sendPaswordResetEmail(email, user.names, passwordResetCode)
         return ServerResponse.success(res, "Password reset email sent successfully")
     } catch (error) {
+        console.log(error);
         return ServerResponse.error(res, "Error occured", { error })
     }
 }
@@ -92,12 +93,11 @@ const initiateEmailVerification: any = async (req: AuthRequest, res: Response) =
 const verifyEmail = async (req: Request, res: Response) => {
     // #swagger.tags = ['Auth']
     try {
-        const { password, code } = req.body
+        const { code } = req.params
         const user = await prisma.user.findFirst({
             where: { verificationCode: code, verificationExpires: { gte: new Date() } }
         })
         if (!user) return ServerResponse.error(res, "Invalid or expired code")
-        const hashedPassword = await hash(password, 10)
         await prisma.user.update({
             where: { id: user.id },
             data: {
@@ -106,7 +106,7 @@ const verifyEmail = async (req: Request, res: Response) => {
                 verificationExpires: null
             }
         })
-        return ServerResponse.success(res, "Verification code successfully")
+        return ServerResponse.success(res, "Verification successfully")
     } catch (error) {
         return ServerResponse.error(res, "Error occured", { error })
     }

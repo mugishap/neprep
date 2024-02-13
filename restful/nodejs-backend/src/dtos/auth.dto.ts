@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString, Matches, MaxLength, MinLength } from "class-validator";
 
 export class LoginDTO {
 
@@ -6,12 +6,14 @@ export class LoginDTO {
     @IsNotEmpty()
     email: string;
 
-    @IsString()
     @IsNotEmpty()
+    @IsString()
     @MinLength(4)
     @MaxLength(16)
-    password: string;
-
+    @Matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{6,}$/, {
+        message: 'Password must have at least 6 characters, one symbol, one number, and one uppercase letter.',
+    })
+    readonly password: string;
 }
 
 
@@ -25,11 +27,14 @@ export class InitiateResetPasswordDTO {
 
 export class ResetPasswordDTO {
 
-    @IsString()
     @IsNotEmpty()
+    @IsString()
     @MinLength(4)
     @MaxLength(16)
-    password: string;
+    @Matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{6,}$/, {
+        message: 'Password must have at least 6 characters, one symbol, one number, and one uppercase letter.',
+    })
+    readonly password: string;
 
     @IsString()
     @IsNotEmpty()

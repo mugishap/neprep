@@ -21,4 +21,4 @@ RUN yarn build
 
 EXPOSE 5006
 
-CMD ["yarn", "start:prod"]
+CMD ["yarn", "dev"]

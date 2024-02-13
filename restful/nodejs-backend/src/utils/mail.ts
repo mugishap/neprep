@@ -32,7 +32,7 @@ const sendAccountVerificationEmail = async (email: string, names: string, verifi
                 <body>
                     <h2>Dear ${names}, </h2>
                     <h2> To verify your account. Click the link below or use the code below</h2>
-                    <strong>Verification code: ${verificationToken}</strong>
+                    <strong>Verification code: ${verificationToken}</strong> <br/> or
                     <a href="${process.env.CLIENT_URL}/auth/verify-email/${verificationToken}" style="color:#4200FE;letter-spacing: 2px;">Click here</a>
                     <span>The code expires in 6 hours</span>
                     <p>Best regards,<br>NE NodeJS Template team</p>
@@ -63,7 +63,8 @@ const sendPaswordResetEmail = async (email: string, names: string, passwordReset
                 <html>
                 <body>
                     <h2>Dear ${names}, </h2>
-                    <h2> Click on the link below to change you password</h2>
+                    <h2> Click on the link below to change you password or use the code below</h2>
+                    <strong>Reset code: ${passwordResetToken}</strong> <br/> or
                     <a href="${process.env.CLIENT_URL}/auth/reset-password/${passwordResetToken}" style="color:#4200FE;letter-spacing: 2px;">Click here</a>
                     <span>The code expires in 6 hours</span>
                     <p>Best regards,<br>NE NodeJS Template team</p>

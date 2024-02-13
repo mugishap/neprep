@@ -18,11 +18,14 @@ export class CreateUserDTO {
     })
     readonly telephone: string;
 
-    @IsString()
     @IsNotEmpty()
+    @IsString()
     @MinLength(4)
     @MaxLength(16)
-    password: string;
+    @Matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{6,}$/, {
+        message: 'Password must have at least 6 characters, one symbol, one number, and one uppercase letter.',
+    })
+    readonly password: string;
 
 }
 
@@ -48,17 +51,23 @@ export class UpdateUserDTO {
 
 export class ChangePasswordDTO {
 
-    @IsString()
     @IsNotEmpty()
+    @IsString()
     @MinLength(4)
     @MaxLength(16)
-    oldPassword: string;
+    @Matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{6,}$/, {
+        message: 'Password must have at least 6 characters, one symbol, one number, and one uppercase letter.',
+    })
+    readonly oldPassword: string;
 
-    @IsString()
     @IsNotEmpty()
+    @IsString()
     @MinLength(4)
     @MaxLength(16)
-    newPassword: string;
+    @Matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{6,}$/, {
+        message: 'Password must have at least 6 characters, one symbol, one number, and one uppercase letter.',
+    })
+    readonly newPassword: string;
 
 }
 

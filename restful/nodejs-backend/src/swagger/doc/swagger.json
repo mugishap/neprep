@@ -65,7 +65,7 @@
       }
     },
     "/auth/initiate-reset-password": {
-      "post": {
+      "patch": {
         "tags": [
           "Auth"
         ],
@@ -92,7 +92,7 @@
       }
     },
     "/auth/reset-password": {
-      "post": {
+      "patch": {
         "tags": [
           "Auth"
         ],
@@ -122,7 +122,7 @@
       }
     },
     "/auth/initiate-email-verification": {
-      "post": {
+      "patch": {
         "tags": [
           "Auth"
         ],
@@ -147,7 +147,7 @@
       }
     },
     "/auth/verify-email/{code}": {
-      "post": {
+      "patch": {
         "tags": [
           "Auth"
         ],
@@ -163,21 +163,6 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "password": {
-                  "example": "any"
-                },
-                "code": {
-                  "example": "any"
-                }
-              }
-            }
           }
         ],
         "responses": {
@@ -473,13 +458,37 @@
           }
         ]
       }
-    }
-  },
-  "components": {
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
+    },
+    "/user/update-password": {
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "oldPassword": {
+                  "example": "any"
+                },
+                "newPassword": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
       }
     }
   }

@@ -28,14 +28,6 @@ const doc = {
             in: 'header'
         }
     },
-    components: {
-        securitySchemes: {
-            bearerAuth: {
-                type: 'http',
-                scheme: 'bearer'
-            }
-        }
-    },
     definitions: {}
 };
 

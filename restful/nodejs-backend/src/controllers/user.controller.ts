@@ -1,10 +1,11 @@
-import { hashSync } from "bcrypt";
+import { compareSync, hashSync } from "bcrypt";
 import { config } from "dotenv";
 import { Request, Response } from "express";
 import jwt from 'jsonwebtoken';
 import prisma from "../prisma/prisma-client";
 import { AuthRequest } from "../types";
 import ServerResponse from "../utils/ServerResponse";
+import { User } from "@prisma/client";
 
 config()
 
@@ -64,7 +65,7 @@ const me: any = async (req: AuthRequest, res: Response) => {
     }] */
     try {
         const user = await prisma.user.findUnique({ where: { id: req.user.id } })
-        return ServerResponse.success(res, "User f successfully", { user })
+        return ServerResponse.success(res, "User fetched successfully", { user })
     } catch (error) {
         return ServerResponse.error(res, "Error occured", { error })
     }
@@ -127,7 +128,7 @@ const removeAvatar: any = async (req: AuthRequest, res: Response) => {
         const user = await prisma.user.update({
             where: { id: req.user.id },
             data: {
-                profilePicture: ""
+                profilePicture: "https://firebasestorage.googleapis.com/v0/b/relaxia-services.appspot.com/o/relaxia-profiles%2Fblank-profile-picture-973460_960_720.webp?alt=media"
             }
         })
         return ServerResponse.success(res, "User updated successfully", { user })
@@ -167,6 +168,26 @@ const updateAvatar: any = async (req: AuthRequest, res: Response) => {
     }
 }
 
+const updatePassword: any = async (req: AuthRequest, res: Response) => {
+    try {
+        const { oldPassword, newPassword } = req.body
+        const user = await prisma.user.findUnique({ where: { id: req.user.id } })
+        if (!user) ServerResponse.error(res, "User not found", 404)
+        const isPasswordValid = compareSync(oldPassword, (user as User).password)
+        if (!isPasswordValid) return ServerResponse.error(res, "Invalid old password", 400)
+        const hashedPassword = hashSync(newPassword, 10)
+        const updatedUser = await prisma.user.update({
+            where: { id: req.user.id },
+            data: {
+                password: hashedPassword
+            }
+        })
+        return ServerResponse.success(res, "Password updated successfully", { user: updatedUser })
+    } catch (error) {
+        return ServerResponse.error(res, "Error occured", { error })
+    }
+}
+
 const userController = {
     createUser,
     updateUser,
@@ -177,7 +198,8 @@ const userController = {
     deleteUser,
     removeAvatar,
     deleteById,
-    updateAvatar
+    updateAvatar,
+    updatePassword
 }
 
 export default userController;

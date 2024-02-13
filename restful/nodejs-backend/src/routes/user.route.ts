@@ -1,6 +1,6 @@
 import { ErrorRequestHandler, RequestHandler, Router } from "express";
 import userController from "../controllers/user.controller";
-import { CreateUserDTO, UpdateAvatarDTO, UpdateUserDTO } from "../dtos/user.dto";
+import { ChangePasswordDTO, CreateUserDTO, UpdateAvatarDTO, UpdateUserDTO } from "../dtos/user.dto";
 import { checkAdmin, checkLoggedIn } from "../middlewares/auth.middleware";
 import { validationMiddleware } from "../middlewares/validator.middleware";
 
@@ -16,5 +16,6 @@ userRouter.delete("/me", [checkLoggedIn], userController.deleteUser)
 userRouter.delete("/remove-avatar", [checkLoggedIn], userController.removeAvatar)
 userRouter.delete("/by-id/:id", [checkAdmin], userController.deleteById)
 userRouter.patch("/update-avatar", [checkLoggedIn, validationMiddleware(UpdateAvatarDTO)], userController.updateAvatar)
+userRouter.patch("/update-password", [checkLoggedIn, validationMiddleware(ChangePasswordDTO)], userController.updatePassword)
 
 export default userRouter
