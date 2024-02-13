@@ -55,7 +55,7 @@ const updateUser = async (req: AuthRequest, res: Response) => {
 const me = async (req: AuthRequest, res: Response) => {
     try {
         const user = await prisma.user.findUnique({ where: { id: req.user.id } })
-        return ServerResponse.success(res, "User updated successfully", { user })
+        return ServerResponse.success(res, "User f successfully", { user })
     } catch (error) {
         return ServerResponse.error(res, "Error occured", { error })
     }
@@ -73,7 +73,7 @@ const all = async (req: Request, res: Response) => {
 const getById = async (req: Request, res: Response) => {
     try {
         const user = await prisma.user.findUnique({ where: { id: req.params.id } })
-        return ServerResponse.success(res, "User updated successfully", { user })
+        return ServerResponse.success(res, "User fetched successfully", { user })
     } catch (error) {
         return ServerResponse.error(res, "Error occured", { error })
     }
@@ -83,7 +83,7 @@ const searchUser = async (req: Request, res: Response) => {
     try {
         const { query } = req.params
         const users = await prisma.user.findMany({ where: { names: { contains: query, mode: 'insensitive' } } })
-        return ServerResponse.success(res, "User updated successfully", { users })
+        return ServerResponse.success(res, "Users fetched successfully", { users })
     } catch (error) {
         return ServerResponse.error(res, "Error occured", { error })
     }
