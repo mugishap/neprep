@@ -123,12 +123,27 @@
     },
     "/auth/initiate-email-verification": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/auth/verify-email/{code}": {
@@ -142,6 +157,11 @@
             "name": "code",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
             "type": "string"
           },
           {
@@ -205,22 +225,93 @@
     },
     "/user/update": {
       "put": {
+        "tags": [
+          "Users"
+        ],
         "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "names": {
+                  "example": "any"
+                },
+                "telephone": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/user/me": {
       "get": {
+        "tags": [
+          "Users"
+        ],
         "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/user/all": {
@@ -229,6 +320,13 @@
           "Users"
         ],
         "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "default": {
             "description": ""
@@ -283,24 +381,29 @@
         }
       }
     },
-    "/userme": {
-      "delete": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/user/remove-avatar": {
       "delete": {
+        "tags": [
+          "Users"
+        ],
         "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/user/by-id/{id}": {
@@ -314,6 +417,11 @@
             "name": "id",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
             "type": "string"
           }
         ],
@@ -331,12 +439,39 @@
     },
     "/user/update-avatar": {
       "patch": {
+        "tags": [
+          "Users"
+        ],
         "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     }
   },

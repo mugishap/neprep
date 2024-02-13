@@ -32,7 +32,7 @@ const createUser = async (req: Request, res: Response) => {
     }
 }
 
-const updateUser = async (req: AuthRequest, res: Response) => {
+const updateUser: any = async (req: AuthRequest, res: Response) => {
     // #swagger.tags = ['Users']
     /* #swagger.security = [{
             "bearerAuth": []
@@ -57,7 +57,7 @@ const updateUser = async (req: AuthRequest, res: Response) => {
     }
 }
 
-const me = async (req: AuthRequest, res: Response) => {
+const me: any = async (req: AuthRequest, res: Response) => {
     // #swagger.tags = ['Users']
     /* #swagger.security = [{
             "bearerAuth": []
@@ -105,7 +105,7 @@ const searchUser = async (req: Request, res: Response) => {
     }
 }
 
-const deleteUser = async (req: AuthRequest, res: Response) => {
+const deleteUser: any = async (req: AuthRequest, res: Response) => {
     // #swagger.tags = ['Users']
     /* #swagger.security = [{
             "bearerAuth": []
@@ -118,7 +118,7 @@ const deleteUser = async (req: AuthRequest, res: Response) => {
     }
 }
 
-const removeAvatar = async (req: AuthRequest, res: Response) => {
+const removeAvatar: any = async (req: AuthRequest, res: Response) => {
     // #swagger.tags = ['Users']
     /* #swagger.security = [{
             "bearerAuth": []
@@ -149,7 +149,7 @@ const deleteById = async (req: Request, res: Response) => {
     }
 }
 
-const updateAvatar = async (req: AuthRequest, res: Response) => {
+const updateAvatar: any = async (req: AuthRequest, res: Response) => {
     // #swagger.tags = ['Users']
     /* #swagger.security = [{
             "bearerAuth": []

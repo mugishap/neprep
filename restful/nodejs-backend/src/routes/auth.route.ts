@@ -9,7 +9,7 @@ const authRouter = Router()
 authRouter.post("/login", [validationMiddleware(LoginDTO)], authController.login)
 authRouter.post("/initiate-reset-password", [validationMiddleware(InitiateResetPasswordDTO)], authController.initiateResetPassword)
 authRouter.post("/reset-password", [validationMiddleware(ResetPasswordDTO)], authController.resetPassword)
-authRouter.post("/initiate-email-verification", [checkLoggedIn as RequestHandler], authController.initiateEmailVerification as any)
-authRouter.post("/verify-email/{code}", [checkLoggedIn as RequestHandler], authController.verifyEmail)
+authRouter.post("/initiate-email-verification", [checkLoggedIn], authController.initiateEmailVerification)
+authRouter.post("/verify-email/{code}", [checkLoggedIn], authController.verifyEmail)
 
 export default authRouter

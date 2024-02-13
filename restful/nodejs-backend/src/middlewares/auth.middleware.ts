@@ -1,15 +1,15 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import jwt from "jsonwebtoken";
-import { AuthRequest } from "../types";
+import { AuthMiddleware, AuthRequest } from "../types";
 import prisma from "../prisma/prisma-client";
 import ServerResponse from "../utils/ServerResponse";
 
-export const checkLoggedIn = (req: AuthRequest, res: Response, next: NextFunction) => {
+export const checkLoggedIn: any = (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
         const token = req.headers.authorization?.split(" ")[1]
-        if (!token) return res.status(401).json({ message: "No token sent in headers!!!" })
+        if (!token) return ServerResponse.unauthenticated(res, "You are not logged in")
         const response = jwt.verify(token, process.env.JWT_SECRET_KEY as string, {})
-        if (!response) return res.status(401).json({ message: "You are not logged in" })
+        if (!response) return ServerResponse.unauthenticated(res, "You are not logged in")
         req.user = { id: (response as any).id }
         next()
     }
@@ -18,15 +18,15 @@ export const checkLoggedIn = (req: AuthRequest, res: Response, next: NextFunctio
     }
 }
 
-export const checkAdmin = async (req: AuthRequest, res: Response, next: NextFunction) => {
+export const checkAdmin: any = async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
         const token = req.headers.authorization?.split(" ")[1]
-        if (!token) return res.status(401).json({ message: "You are not an admin" })
+        if (!token) return ServerResponse.unauthorized(res, "You are not an admin")
         const response = await jwt.verify(token, process.env.JWT_SECRET_KEY as string, {})
-        if (!response) return res.status(401).json({ message: "You are not an admin" })
+        if (!response) return ServerResponse.unauthorized(res, "You are not an admin")
         const user = await prisma.user.findUnique({ where: { id: (response as any).id } })
-        if (!user) return res.status(401).json({ message: "You are not logged in" })
-        if (user.role != "ADMIN") return ServerResponse.error(res, "You're not allowed to access this resource")
+        if (!user) return ServerResponse.unauthorized(res, "You are not logged in")
+        if (user.role != "ADMIN") return ServerResponse.unauthorized(res, "You're not allowed to access this resource")
         req.user = { id: user.id }
         next()
     }

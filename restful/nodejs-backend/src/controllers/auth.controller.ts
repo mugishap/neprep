@@ -66,7 +66,7 @@ const resetPassword = async (req: Request, res: Response) => {
     }
 }
 
-const initiateEmailVerification = async (req: AuthRequest, res: Response) => {
+const initiateEmailVerification: any = async (req: AuthRequest, res: Response) => {
     // #swagger.tags = ['Auth']
     /* #swagger.security = [{
             "bearerAuth": []
