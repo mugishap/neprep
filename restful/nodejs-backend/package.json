@@ -14,8 +14,8 @@
     "prisma:studio": "npx prisma studio --schema src/prisma/schema.prisma",
     "prisma:all": "yarn prisma:migrate && yarn prisma:gen",
     "prisma:seed": "ts-node src/seeders/seed.ts",
-    "docker:build": "docker build -t mugishap/ne-nestjs .",
-    "docker:run": "docker run -p 4002:4002 mugishap/ne-nestjs"
+    "docker:build": "docker build -t mugishap/ne-nodejs .",
+    "docker:run": "docker run -p 4002:4002 mugishap/ne-nodejs"
   },
   "author": "mugishap",
   "license": "MIT",

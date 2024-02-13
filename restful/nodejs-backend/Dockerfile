@@ -2,14 +2,23 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-COPY package.json .
-
-COPY yarn.lock .
+# Copy package.json first to utilize Docker cache
+COPY package*.json ./
 
 RUN yarn install
 
+# Copy the rest of the application code after installing dependencies
 COPY . .
 
-EXPOSE 3000
+# Copy Prisma files after the dependencies have been installed
+COPY ./src/prisma ./src/prisma
 
-CMD ["yarn", "dev"]
+# Check if upload directories exists, create them if they don't and give permissions
+
+RUN yarn prisma:all
+
+RUN yarn build
+
+EXPOSE 5006
+
+CMD ["yarn", "start:prod"]
