@@ -12,9 +12,9 @@ userRouter.get("/me", [checkLoggedIn as RequestHandler], userController.me as an
 userRouter.get("/all", [checkAdmin as any], userController.all)
 userRouter.get("/:id", [], userController.getById)
 userRouter.get("/search/:query", [], userController.searchUser)
-userRouter.delete("/", [checkLoggedIn as RequestHandler], userController.deleteUser as any)
+userRouter.delete("me", [checkLoggedIn as RequestHandler], userController.deleteUser as any)
 userRouter.delete("/remove-avatar", [checkLoggedIn as RequestHandler], userController.removeAvatar as any)
-userRouter.delete("/by-id/:id", [checkAdmin as any], userController.getById)
+userRouter.delete("/by-id/:id", [checkAdmin as any], userController.deleteById)
 userRouter.patch("/update-avatar", [checkLoggedIn as RequestHandler, validationMiddleware(UpdateAvatarDTO)], userController.updateAvatar as any)
 
 export default userRouter

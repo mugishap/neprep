@@ -12,5 +12,6 @@
         "experimentalDecorators": true,
         "strictPropertyInitialization": false,
         "emitDecoratorMetadata": true,
+        "resolveJsonModule": true
     }
 }

@@ -3,12 +3,13 @@ import { config } from "dotenv";
 import { Request, Response } from "express";
 import jwt from 'jsonwebtoken';
 import prisma from "../prisma/prisma-client";
-import ServerResponse from "../utils/ServerResponse";
 import { AuthRequest } from "../types";
+import ServerResponse from "../utils/ServerResponse";
 
 config()
 
 const createUser = async (req: Request, res: Response) => {
+    // #swagger.tags = ['Users']
     try {
         const { email, names, telephone, password } = req.body
         const hashedPassword = hashSync(password, 10)
@@ -32,6 +33,10 @@ const createUser = async (req: Request, res: Response) => {
 }
 
 const updateUser = async (req: AuthRequest, res: Response) => {
+    // #swagger.tags = ['Users']
+    /* #swagger.security = [{
+            "bearerAuth": []
+    }] */
     try {
         const { email, names, telephone } = req.body
         const user = await prisma.user.update({
@@ -53,6 +58,10 @@ const updateUser = async (req: AuthRequest, res: Response) => {
 }
 
 const me = async (req: AuthRequest, res: Response) => {
+    // #swagger.tags = ['Users']
+    /* #swagger.security = [{
+            "bearerAuth": []
+    }] */
     try {
         const user = await prisma.user.findUnique({ where: { id: req.user.id } })
         return ServerResponse.success(res, "User f successfully", { user })
@@ -62,6 +71,10 @@ const me = async (req: AuthRequest, res: Response) => {
 }
 
 const all = async (req: Request, res: Response) => {
+    // #swagger.tags = ['Users']
+    /* #swagger.security = [{
+                "bearerAuth": []
+        }] */
     try {
         const users = await prisma.user.findMany({})
         return ServerResponse.success(res, "User updated successfully", { users })
@@ -71,6 +84,8 @@ const all = async (req: Request, res: Response) => {
 }
 
 const getById = async (req: Request, res: Response) => {
+    // #swagger.tags = ['Users']
+
     try {
         const user = await prisma.user.findUnique({ where: { id: req.params.id } })
         return ServerResponse.success(res, "User fetched successfully", { user })
@@ -80,6 +95,7 @@ const getById = async (req: Request, res: Response) => {
 }
 
 const searchUser = async (req: Request, res: Response) => {
+    // #swagger.tags = ['Users']
     try {
         const { query } = req.params
         const users = await prisma.user.findMany({ where: { names: { contains: query, mode: 'insensitive' } } })
@@ -90,6 +106,10 @@ const searchUser = async (req: Request, res: Response) => {
 }
 
 const deleteUser = async (req: AuthRequest, res: Response) => {
+    // #swagger.tags = ['Users']
+    /* #swagger.security = [{
+            "bearerAuth": []
+    }] */
     try {
         const user = await prisma.user.delete({ where: { id: req.user.id } })
         return ServerResponse.success(res, "User deleted successfully", { user })
@@ -99,6 +119,10 @@ const deleteUser = async (req: AuthRequest, res: Response) => {
 }
 
 const removeAvatar = async (req: AuthRequest, res: Response) => {
+    // #swagger.tags = ['Users']
+    /* #swagger.security = [{
+            "bearerAuth": []
+    }] */
     try {
         const user = await prisma.user.update({
             where: { id: req.user.id },
@@ -113,6 +137,10 @@ const removeAvatar = async (req: AuthRequest, res: Response) => {
 }
 
 const deleteById = async (req: Request, res: Response) => {
+    // #swagger.tags = ['Users']
+    /* #swagger.security = [{
+                "bearerAuth": []
+        }] */
     try {
         const user = await prisma.user.delete({ where: { id: req.params.id } })
         return ServerResponse.success(res, "User deleted successfully", { user })
@@ -122,6 +150,10 @@ const deleteById = async (req: Request, res: Response) => {
 }
 
 const updateAvatar = async (req: AuthRequest, res: Response) => {
+    // #swagger.tags = ['Users']
+    /* #swagger.security = [{
+            "bearerAuth": []
+    }] */
     try {
         const user = await prisma.user.update({
             where: { id: req.user.id },
