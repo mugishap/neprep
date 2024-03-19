@@ -169,6 +169,10 @@ const updateAvatar: any = async (req: AuthRequest, res: Response) => {
 }
 
 const updatePassword: any = async (req: AuthRequest, res: Response) => {
+    // #swagger.tags = ['Auth']
+    /* #swagger.security = [{
+            "bearerAuth": []
+    }] */
     try {
         const { oldPassword, newPassword } = req.body
         const user = await prisma.user.findUnique({ where: { id: req.user.id } })
