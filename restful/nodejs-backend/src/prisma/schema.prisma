@@ -9,7 +9,7 @@ datasource db {
 
 enum Role {
     ADMIN // The application admin
-    USER // This is a company worker who rejects and accepts applications and posts jpbs
+    USER // This is a compuser
 
     @@map("roles")
 }

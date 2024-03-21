@@ -8,8 +8,7 @@ const appConfig = () => ({
         url: process.env.CLIENT_URL
     },
     files: {
-        profilePicturesPath: process.env.PROFILES_FILES_PATH,
-        resumesPath: process.env.RESUMES_FILES_PATH,
+        filesPath: process.env.FILES_PATH,
         uploadLimit:process.env.FILE_MAX_SIZE
     }
 });

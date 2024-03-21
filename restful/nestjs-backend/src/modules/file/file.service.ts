@@ -19,12 +19,7 @@ export class FileService {
             where: { id }
         });
         if (!file) throw new HttpException('File not found', 404);
-        let filePath = '';
-        if (file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg') {
-            filePath = `${process.env.PROFILE_FILES_PATH}/${file.name}`;
-        } else {
-            filePath = `${process.env.RESUMES_FILES_PATH}/${file.name}`;
-        }
+        const filePath = `${process.env.FILES_PATH}/${file.folder}/${file.name}`;
         try {
             const fileContent = await fsPromises.readFile(filePath);
             return { fileContent, file };
@@ -35,7 +30,8 @@ export class FileService {
     }
 
     async saveFile(
-        fileObject: Express.Multer.File
+        fileObject: Express.Multer.File,
+        folder: string
     ) {
         try {
             const { originalname, filename } = fileObject;
@@ -43,6 +39,7 @@ export class FileService {
             const file = await this.prisma.file.create({
                 data: {
                     id,
+                    folder,
                     name: filename,
                     originalName: originalname,
                     url: `${this.configService.get('SERVER_URL')}/api/v1/file/${id}`,

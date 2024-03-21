@@ -4,6 +4,7 @@ import {
   Delete,
   FileTypeValidator,
   Get,
+  HttpException,
   MaxFileSizeValidator,
   Param,
   ParseFilePipe,
@@ -24,7 +25,6 @@ import { AdminGuard } from 'src/guards/admin.guard';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { AuthRequest } from 'src/types';
 import ServerResponse from 'src/utils/ServerResponse';
-import { AssignWorkerToCompanyDTO } from './dto/assign-worker-to-company.dto';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
 import { UserService } from './user.service';
@@ -128,7 +128,7 @@ export class UserController {
       preservePath: true,
       fileFilter: (req, file, cb) => cb(null, true),
       storage: diskStorage({
-        destination: "/opt/nestjsproject/uploads/profiles",
+        destination: appConfig().files.filesPath + "/profiles",
         filename: (req, file, cb) => {
           const extension = file.originalname.split('.').pop();
           const timestamp = Date.now();
@@ -150,15 +150,20 @@ export class UserController {
       }),
     ) profilePicture: Express.Multer.File
   ) {
-    const { profilePicture: profilePictureExists } = await this.userService.findById(req.user.id)
-    if (profilePictureExists) {
-      await this.userService.removeProfilePicture(req.user.id)
+    try {
+      const { profilePicture: profilePictureExists } = await this.userService.findById(req.user.id)
+      if (profilePictureExists) {
+        await this.userService.removeProfilePicture(req.user.id)
+      }
+      const user = await this.userService.updateAvatar(
+        req.user.id,
+        profilePicture
+      );
+      return ServerResponse.success('Avatar updated successfully', { user });
     }
-    const user = await this.userService.updateAvatar(
-      req.user.id,
-      profilePicture
-    );
-    return ServerResponse.success('Avatar updated successfully', { user });
+    catch (e) {
+      throw new HttpException("Error uploading file", 500)
+    }
   }
 
 }

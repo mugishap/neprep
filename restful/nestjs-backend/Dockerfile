@@ -15,8 +15,7 @@ COPY ./src/prisma ./src/prisma
 
 # Check if upload directories exists, create them if they don't and give permissions
 RUN mkdir -p /opt/nestjsproject/uploads/profiles
-RUN mkdir -p /opt/nestjsproject/uploads/resumes
-RUN chmod -R 777 /opt/nestjsproject/uploads/profiles /opt/nestjsproject/uploads/resumes
+RUN chmod -R 777 /opt/nestjsproject/uploads/profiles 
 
 RUN yarn prisma:all
 

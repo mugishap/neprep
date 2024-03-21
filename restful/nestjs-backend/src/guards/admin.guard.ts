@@ -17,9 +17,7 @@ export class AdminGuard implements CanActivate {
         });
         if (!user) return false;
         switch (user.role) {
-          case 'COMPANY_WORKER':
-            return false;
-          case 'JOB_SEEKER':
+          case 'USER':
             return false;
           case 'ADMIN':
             request.user = decodedToken;

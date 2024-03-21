@@ -15,6 +15,9 @@ export class UpdateUserDTO {
 
     @IsNotEmpty()
     @ApiProperty()
+    @Matches(/^\+250\d{9}$/, {
+        message: 'Mobile number must start with "+250" and have 9 digits after that.',
+    })
     readonly telephone: string;
 
 }

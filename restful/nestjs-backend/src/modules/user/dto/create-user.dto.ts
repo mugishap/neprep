@@ -13,13 +13,16 @@ export class CreateUserDTO {
     @ApiProperty()
     readonly email: string;
 
-    @IsEnum(['JOB_SEEKER', 'COMPANY_WORKER'], { message: "User must be either job seeker or company worker" })
+    @IsEnum(['USER'], { message: "User must be either user or admin" })
     @IsNotEmpty({ message: "Role is required" })
     @ApiProperty()
-    readonly role: 'JOB_SEEKER' | 'COMPANY_WORKER';
+    readonly role: 'USER';
 
     @IsNotEmpty()
     @ApiProperty()
+    @Matches(/^\+250\d{9}$/, {
+        message: 'Mobile number must start with "+250" and have 9 digits after that.',
+    })
     readonly telephone: string;
 
     @IsNotEmpty()

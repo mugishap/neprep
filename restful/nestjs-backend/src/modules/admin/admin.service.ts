@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateAdminDTO } from './dto/create-admin.dto';
+import { CreateUserDTO } from '../user/dto/create-user.dto';
 
 @Injectable()
 export class AdminService {
@@ -11,20 +11,12 @@ export class AdminService {
 
     async getStats() {
         const users = await this.prisma.user.count();
-        const jobs = await this.prisma.job.count();
-        const applications = await this.prisma.application.count();
-        const skills = await this.prisma.skill.count();
-        const companies = await this.prisma.company.count();
-        const profiles = await this.prisma.profile.count();
-        const benefits = await this.prisma.benefit.count();
-        const contacts = await this.prisma.contact.count();
-        const faqs = await this.prisma.faq.count();
         const files = await this.prisma.file.count();
 
-        return { users, jobs, applications, skills, companies, profiles, benefits, contacts, faqs, files }
+        return { users, files }
     }
 
-    async createAdmin(dto: CreateAdminDTO) {
+    async createAdmin(dto: CreateUserDTO) {
         const admin = await this.prisma.user.create({
             data: {
                 ...dto,

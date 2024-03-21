@@ -7,7 +7,6 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { FileService } from '../file/file.service';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
-import { ProfileService } from '../profile/profile.service';
 import { Prisma } from '@prisma/client';
 import { paginator } from 'src/pagination/paginator';
 
@@ -76,22 +75,10 @@ export class UserService {
         }
     }
 
-    async assignToCompany(userId: string, companyId: string) {
-        const user = await this.prisma.user.update({
-            where: { id: userId },
-            data: {
-                company: {
-                    connect: { id: companyId }
-                }
-            }
-        })
-        return user
-    }
-
     async findById(id: string) {
         const user = await this.prisma.user.findUnique({
             where: { id },
-            include: { profilePicture: true, profile: true }
+            include: { profilePicture: true }
         })
         return user
     }
@@ -160,8 +147,7 @@ export class UserService {
     }
 
     async updateAvatar(id: string, fileObject: Express.Multer.File) {
-        const file = await this.fileService.saveFile(fileObject);
-
+        const file = await this.fileService.saveFile(fileObject, "profiles");
         const user = await this.prisma.user.update({
             where: { id },
             data: {
