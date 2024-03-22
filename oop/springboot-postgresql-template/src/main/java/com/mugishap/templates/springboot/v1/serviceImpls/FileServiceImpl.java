@@ -71,7 +71,7 @@ public class FileServiceImpl implements IFileService {
         file.setStatus(EFileStatus.SAVED);
         file.setType(document.getContentType());
         file.setSize(documentSize);
-        file.setUrl(host + "/api/v1/files/" + fileName.replaceAll(" ", "_"));
+        file.setUrl(host + "/api/v1/files/load-file/" + fileName.replaceAll(" ", "_"));
         file.setSizeType(EFileSizeType.valueOf(documentSizeType));
 
         return this.fileRepository.save(file);

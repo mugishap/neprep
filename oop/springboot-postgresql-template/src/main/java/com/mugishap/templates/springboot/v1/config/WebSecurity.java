@@ -74,9 +74,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                         "/favicon.ico",
                         "/**/*.png",
                         "/**/*.gif",
-                        "/**/*.svg").permitAll()
-                .antMatchers("/**/*.jpg", "/**/*.html",
-                        "/**/*.css", "/**/*.js"
+                        "/**/*.svg",
+                        "/**/*.jpg",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js"
                 ).permitAll()
                 .antMatchers("/v2/api-docs",
                         "/configuration/ui",
