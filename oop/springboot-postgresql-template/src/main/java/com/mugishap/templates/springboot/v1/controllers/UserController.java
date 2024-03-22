@@ -97,7 +97,13 @@ public class UserController {
         User updated = this.userService.changeProfileImage(user.getId(), file);
 
         return ResponseEntity.ok(new ApiResponse(true, "File saved successfully", updated));
+    }
 
+    @PatchMapping(path = "/remove-profile")
+    public ResponseEntity<ApiResponse> removeProfileImage() {
+        User user = this.userService.getLoggedInUser();
+        User updated = this.userService.removeProfileImage(user.getId());
+        return ResponseEntity.ok(new ApiResponse(true, "Profile image removed successfully", updated));
     }
 
     private User convertDTO(SignUpDTO dto) {

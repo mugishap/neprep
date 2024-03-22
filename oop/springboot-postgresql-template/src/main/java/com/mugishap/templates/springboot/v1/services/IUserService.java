@@ -41,5 +41,6 @@ public interface IUserService {
     public User changeStatus(UUID id, EUserStatus status);
 
     public User changeProfileImage(UUID id, File file);
+    public User removeProfileImage(UUID id);
 
 }

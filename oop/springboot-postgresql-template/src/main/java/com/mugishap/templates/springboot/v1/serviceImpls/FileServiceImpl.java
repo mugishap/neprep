@@ -9,6 +9,7 @@ import com.mugishap.templates.springboot.v1.exceptions.InvalidFileException;
 import com.mugishap.templates.springboot.v1.exceptions.ResourceNotFoundException;
 import com.mugishap.templates.springboot.v1.services.IFileService;
 import com.mugishap.templates.springboot.v1.utils.FileUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -27,18 +28,17 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class FileServiceImpl implements IFileService {
+
     private final IFileRepository fileRepository;
     private final FileStorageService fileStorageService;
 
     @Value("${uploads.extensions}")
     private String extensions;
 
-    @Autowired
-    public FileServiceImpl(IFileRepository fileRepository, FileStorageService fileStorageService) {
-        this.fileRepository = fileRepository;
-        this.fileStorageService = fileStorageService;
-    }
+    @Value("${server.host}")
+    private String host;
 
     @Override
     public List<File> getAll() {
@@ -71,6 +71,7 @@ public class FileServiceImpl implements IFileService {
         file.setStatus(EFileStatus.SAVED);
         file.setType(document.getContentType());
         file.setSize(documentSize);
+        file.setUrl(host + "/api/v1/files/" + fileName.replaceAll(" ", "_"));
         file.setSizeType(EFileSizeType.valueOf(documentSizeType));
 
         return this.fileRepository.save(file);
@@ -81,9 +82,11 @@ public class FileServiceImpl implements IFileService {
         boolean exists = this.fileRepository.existsById(id);
         if (!exists)
             throw new ResourceNotFoundException("File", "id", id.toString());
+        this.fileStorageService.removeFileOnDisk(this.getById(id).getPath());
         this.fileRepository.deleteById(id);
         return true;
     }
+
 
     @Override
     public Page<File> getAllByStatus(Pageable pageable, EFileStatus status) {
@@ -94,7 +97,6 @@ public class FileServiceImpl implements IFileService {
     public File uploadFile(MultipartFile file, String directory, UUID appointeeID) throws InvalidFileException, IOException {
         String fileName = handleFileName(Objects.requireNonNull(file.getOriginalFilename()), appointeeID);
         Path path = Paths.get(directory, fileName);
-        System.out.println(path.toString());
         Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
         String extension = getFileExtension(fileName);

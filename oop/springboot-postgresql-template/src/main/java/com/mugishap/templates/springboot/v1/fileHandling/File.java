@@ -1,11 +1,13 @@
 package com.mugishap.templates.springboot.v1.fileHandling;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mugishap.templates.springboot.v1.audits.InitiatorAudit;
 import com.mugishap.templates.springboot.v1.enums.EFileSizeType;
 import com.mugishap.templates.springboot.v1.enums.EFileStatus;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -21,39 +23,39 @@ public class File extends InitiatorAudit {
     @Id
     @GeneratedValue(generator = "fileUUID")
     @GenericGenerator(name = "fileUUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name="id")
+    @Column(name = "id")
     private UUID id;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name="path")
+    @JsonIgnore
+    @Column(name = "path")
     private String path;
 
     @Transient
     private String url;
 
-    @Column(name="size")
+    @Column(name = "size")
     private int size;
 
-    @Column(name="size_type")
+    @Column(name = "size_type")
     @Enumerated(EnumType.STRING)
     private EFileSizeType sizeType;
 
-    @Column(name="type")
+    @Column(name = "type")
     private String type;
 
-    @Column(name="status")
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private EFileStatus status;
+
+    @Value("${server.host}")
+    private String host;
 
     public File(String directory, String fileName, String extension, String fileBaseName) {
         super();
     }
 
-
-    public String getUrl() {
-        return "http://localhost:8080/api/v1/files/load-file" + "/" + this.getName();
-    }
 }
 
