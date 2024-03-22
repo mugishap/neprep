@@ -40,7 +40,7 @@ public class UserController {
     private final IFileService fileService;
 
     @Value("${uploads.directory.user_profiles}")
-    private String directory;
+    private String profilesDirectory;
 
     @GetMapping(path = "/current-user")
     public ResponseEntity<ApiResponse> currentlyLoggedInUser() {
@@ -92,7 +92,7 @@ public class UserController {
             @RequestParam("file") MultipartFile document
     ) {
         User user = this.userService.getLoggedInUser();
-        File file = this.fileService.create(document, directory);
+        File file = this.fileService.create(document, profilesDirectory);
 
         User updated = this.userService.changeProfileImage(user.getId(), file);
 

@@ -19,12 +19,17 @@ public class FileController {
     private final IFileService fileService;
 
     @Value("${uploads.directory.user_profiles}")
-    private String directory;
+    private String profilesDirectory;
+
+    @Value("${uploads.directory.docs}")
+    private String docsDirectory;
 
     @GetMapping("/load-file/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> loadProfileImage(@PathVariable String filename) {
-
+//GEt file type from filename
+        String fileType = filename.substring(filename.lastIndexOf(".") + 1);
+        String directory = fileType.equals("pdf") ? docsDirectory : profilesDirectory;
         Resource file = this.fileStorageService.load(directory, filename);
         File _file = this.fileService.getByName(filename);
         return ResponseEntity.ok()

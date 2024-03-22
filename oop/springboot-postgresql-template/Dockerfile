@@ -10,6 +10,7 @@ WORKDIR /app
 
 # Create the directory
 RUN mkdir -p /opt/ne-springboot/uploads/user_profiles
+RUN mkdir -p /opt/ne-springboot/uploads/docs
 
 # Set directory permissions
 RUN chmod 777 /opt/ne-springboot
