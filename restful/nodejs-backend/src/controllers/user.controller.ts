@@ -10,7 +10,6 @@ import { User } from "@prisma/client";
 config()
 
 const createUser = async (req: Request, res: Response) => {
-    // #swagger.tags = ['Users']
     try {
         const { email, names, telephone, password } = req.body
         const hashedPassword = hashSync(password, 10)
@@ -34,10 +33,6 @@ const createUser = async (req: Request, res: Response) => {
 }
 
 const updateUser: any = async (req: AuthRequest, res: Response) => {
-    // #swagger.tags = ['Users']
-    /* #swagger.security = [{
-            "bearerAuth": []
-    }] */
     try {
         const { email, names, telephone } = req.body
         const user = await prisma.user.update({
@@ -59,10 +54,6 @@ const updateUser: any = async (req: AuthRequest, res: Response) => {
 }
 
 const me: any = async (req: AuthRequest, res: Response) => {
-    // #swagger.tags = ['Users']
-    /* #swagger.security = [{
-            "bearerAuth": []
-    }] */
     try {
         const user = await prisma.user.findUnique({ where: { id: req.user.id } })
         return ServerResponse.success(res, "User fetched successfully", { user })
@@ -72,10 +63,6 @@ const me: any = async (req: AuthRequest, res: Response) => {
 }
 
 const all = async (req: Request, res: Response) => {
-    // #swagger.tags = ['Users']
-    /* #swagger.security = [{
-                "bearerAuth": []
-        }] */
     try {
         const users = await prisma.user.findMany({})
         return ServerResponse.success(res, "User updated successfully", { users })
@@ -85,8 +72,6 @@ const all = async (req: Request, res: Response) => {
 }
 
 const getById = async (req: Request, res: Response) => {
-    // #swagger.tags = ['Users']
-
     try {
         const user = await prisma.user.findUnique({ where: { id: req.params.id } })
         return ServerResponse.success(res, "User fetched successfully", { user })
@@ -96,7 +81,6 @@ const getById = async (req: Request, res: Response) => {
 }
 
 const searchUser = async (req: Request, res: Response) => {
-    // #swagger.tags = ['Users']
     try {
         const { query } = req.params
         const users = await prisma.user.findMany({ where: { names: { contains: query, mode: 'insensitive' } } })
@@ -107,10 +91,6 @@ const searchUser = async (req: Request, res: Response) => {
 }
 
 const deleteUser: any = async (req: AuthRequest, res: Response) => {
-    // #swagger.tags = ['Users']
-    /* #swagger.security = [{
-            "bearerAuth": []
-    }] */
     try {
         const user = await prisma.user.delete({ where: { id: req.user.id } })
         return ServerResponse.success(res, "User deleted successfully", { user })
@@ -120,10 +100,6 @@ const deleteUser: any = async (req: AuthRequest, res: Response) => {
 }
 
 const removeAvatar: any = async (req: AuthRequest, res: Response) => {
-    // #swagger.tags = ['Users']
-    /* #swagger.security = [{
-            "bearerAuth": []
-    }] */
     try {
         const user = await prisma.user.update({
             where: { id: req.user.id },
@@ -138,10 +114,6 @@ const removeAvatar: any = async (req: AuthRequest, res: Response) => {
 }
 
 const deleteById = async (req: Request, res: Response) => {
-    // #swagger.tags = ['Users']
-    /* #swagger.security = [{
-                "bearerAuth": []
-        }] */
     try {
         const user = await prisma.user.delete({ where: { id: req.params.id } })
         return ServerResponse.success(res, "User deleted successfully", { user })
@@ -151,10 +123,6 @@ const deleteById = async (req: Request, res: Response) => {
 }
 
 const updateAvatar: any = async (req: AuthRequest, res: Response) => {
-    // #swagger.tags = ['Users']
-    /* #swagger.security = [{
-            "bearerAuth": []
-    }] */
     try {
         const user = await prisma.user.update({
             where: { id: req.user.id },
@@ -169,10 +137,6 @@ const updateAvatar: any = async (req: AuthRequest, res: Response) => {
 }
 
 const updatePassword: any = async (req: AuthRequest, res: Response) => {
-    // #swagger.tags = ['Auth']
-    /* #swagger.security = [{
-            "bearerAuth": []
-    }] */
     try {
         const { oldPassword, newPassword } = req.body
         const user = await prisma.user.findUnique({ where: { id: req.user.id } })

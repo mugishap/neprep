@@ -4,7 +4,20 @@ import userRouter from "./user.route";
 
 const router = Router()
 
-router.use("/auth", authRouter)
-router.use("/user",userRouter)
-
+router.use("/auth", authRouter
+    /*
+        #swagger.tags = ['Auth']
+        #swagger.security = [{
+                "bearerAuth": []
+        }] 
+    */
+)
+router.use("/user", userRouter
+    /*
+        #swagger.tags = ['Users']
+        #swagger.security = [{
+                "bearerAuth": []
+        }] 
+    */
+)
 export default router

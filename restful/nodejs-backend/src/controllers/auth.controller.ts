@@ -7,7 +7,6 @@ import ServerResponse from "../utils/ServerResponse"
 import { sendAccountVerificationEmail, sendPaswordResetEmail } from "../utils/mail"
 
 const login = async (req: Request, res: Response) => {
-    // #swagger.tags = ['Auth']
     try {
         const { email, password } = req.body
         const user = await prisma.user.findUnique({
@@ -24,7 +23,6 @@ const login = async (req: Request, res: Response) => {
 }
 
 const initiateResetPassword = async (req: Request, res: Response) => {
-    // #swagger.tags = ['Auth']
     try {
         const { email } = req.body
         const passwordResetCode = Math.floor(100000 + Math.random() * 900000).toString()
@@ -45,7 +43,6 @@ const initiateResetPassword = async (req: Request, res: Response) => {
 }
 
 const resetPassword = async (req: Request, res: Response) => {
-    // #swagger.tags = ['Auth']
     try {
         const { password, code } = req.body
         const user = await prisma.user.findFirst({
@@ -68,10 +65,6 @@ const resetPassword = async (req: Request, res: Response) => {
 }
 
 const initiateEmailVerification: any = async (req: AuthRequest, res: Response) => {
-    // #swagger.tags = ['Auth']
-    /* #swagger.security = [{
-            "bearerAuth": []
-    }] */
     try {
         const verificationCode = Math.floor(100000 + Math.random() * 900000).toString()
         const verificationExpires = new Date(Date.now() + 1000 * 60 * 60 * 6) // 6 hours
@@ -91,7 +84,6 @@ const initiateEmailVerification: any = async (req: AuthRequest, res: Response) =
 }
 
 const verifyEmail = async (req: Request, res: Response) => {
-    // #swagger.tags = ['Auth']
     try {
         const { code } = req.params
         const user = await prisma.user.findFirst({

@@ -61,7 +61,12 @@
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/auth/initiate-reset-password": {
@@ -88,7 +93,12 @@
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/auth/reset-password": {
@@ -118,7 +128,12 @@
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/auth/initiate-email-verification": {
@@ -169,7 +184,12 @@
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/user/create": {
@@ -205,7 +225,12 @@
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/user/update": {
@@ -342,7 +367,12 @@
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/user/search/{query}": {
@@ -363,7 +393,12 @@
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/user/remove-avatar": {
@@ -462,7 +497,7 @@
     "/user/update-password": {
       "patch": {
         "tags": [
-          "Auth"
+          "Users"
         ],
         "description": "",
         "parameters": [
