@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @Setter
 @AllArgsConstructor
 public class UserPrincipal implements UserDetails {
+
     private UUID id;
 
     private String email;

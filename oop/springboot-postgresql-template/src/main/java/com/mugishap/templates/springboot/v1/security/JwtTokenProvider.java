@@ -49,7 +49,7 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .setId(authUser.getId() + "")
                 .setSubject(userPrincipal.getId() + "")
-                .claim("user", authUser)
+//                .claim("user", authUser)
                 .claim("authorities", grantedAuthorities)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(expiryDate)
