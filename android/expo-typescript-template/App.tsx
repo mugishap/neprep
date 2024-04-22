@@ -1,32 +1,14 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ReactNode, createContext, useContext, useState } from "react";
+import CommonContextProvider from "./src/context";
+import Screens from "./src/routes";
 
-const CommonContext = createContext<any>({})
+const App: React.FC = () => {
 
-export const useCommon = () => {
-  return useContext(CommonContext);
-}
-
-interface Props {
-  children?: ReactNode
-}
-
-const CommonContextProvider: React.FC<Props> = ({ children }) => {
-
-  const [user, setUser] = useState({})
-  const [isLoggedIn, setIsLoggedIn] = useState(async () => (await AsyncStorage.getItem("token")) ? true : false)
   return (
-
-    <CommonContext.Provider value={{
-      user,
-      setUser,
-      isLoggedIn,
-      setIsLoggedIn
-    }}>
-      {children}
-    </CommonContext.Provider>
+    <CommonContextProvider>
+      <Screens />
+    </CommonContextProvider>
 
   );
 }
 
-export default CommonContextProvider;
+export default App;
