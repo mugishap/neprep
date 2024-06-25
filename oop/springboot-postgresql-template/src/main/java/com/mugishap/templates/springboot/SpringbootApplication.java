@@ -34,11 +34,10 @@ public class SpringbootApplication {
 
         for (ERole role : roles) {
             Optional<Role> roleByName = roleRepository.findByName(role);
-            if (!roleByName.isPresent()) {
+            if (roleByName.isEmpty()) {
                 Role newRole = new Role(role, role.toString());
                 roleRepository.save(newRole);
                 System.out.println("Created: " + role.toString());
-
             }
         }
     }
